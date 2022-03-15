@@ -7,7 +7,7 @@ class FA
     static final int S = 0, D = 1, E = 2, J = 3, X = 4, INVALID = -1;
     static int state = S;
 
-    // Function for the starting state (S)
+    // Functia pentru S
     static void start(char c)
     {
         if (c == 'a')
@@ -17,11 +17,11 @@ class FA
 
         else
         {
-            state = INVALID;
+            state = -1;
         }
     }
 
-    // Function for the starting state D
+    // D
     static void transition1(char c)
     {
         if (c == 'a' || c == 'd')
@@ -38,7 +38,7 @@ class FA
         }
     }
 
-    // Function for the starting state (E)
+    // E
     static void transition2(char c)
     {
         if (c == 'a')
@@ -55,7 +55,7 @@ class FA
         }
     }
 
-    // Function for the starting state (J)
+    // J
     static void transition3(char c)
     {
         if (c == 'c')
@@ -68,7 +68,7 @@ class FA
         }
     }
 
-    // Function for the starting state (X)
+    // X
     static void transition4(char c)
     {
         state = -1;
