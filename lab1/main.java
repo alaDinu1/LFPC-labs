@@ -109,6 +109,7 @@ class FA
 
     public static void main(String []args)
     {
+        
         Scanner input = new Scanner(System.in);
         String expression = input.nextLine();
         char str[] = expression.toCharArray();
