@@ -21,7 +21,7 @@ class FA
         }
     }
 
-    // Function for the starting state (D)
+    // Function for the starting state D
     static void transition1(char c)
     {
         if (c == 'a' || c == 'd')
