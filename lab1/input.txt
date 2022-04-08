@@ -1,0 +1,7 @@
+S -> aD
+D -> dE
+D -> bJ
+J -> cS
+E -> e
+E -> aE
+D -> aE
