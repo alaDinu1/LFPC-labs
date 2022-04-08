@@ -104,6 +104,7 @@ class Auto {
         }
     }
 
+    
     public void inputAuto() {
         addQ();
 
