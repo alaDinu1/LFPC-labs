@@ -1,122 +1,65 @@
 package lab1;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.HashMap;
 import java.util.Scanner;
 
-class FA
-{
-    static final int S = 0, D = 1, E = 2, J = 3, X = 4, INVALID = -1;
-    static int state = S;
+public class main {
 
-    // Functia pentru S
-    static void start(char c)
-    {
-        if (c == 'a')
-        {
-            state = D;
+    public static void main(String[] args) throws FileNotFoundException {
+
+        File file = new File("D:\\LFPC\\input.txt");
+        Scanner grammar_file = new Scanner(file);
+
+        String input;
+
+        HashMap<Character, HashMap<Character, Character>> fa = new HashMap<>();
+
+        while (grammar_file.hasNextLine()) {
+            input = grammar_file.nextLine();
+            String[] contexts = input.split(" -> ");
+
+            if (fa.containsKey(contexts[0].charAt(0))) {
+                if (contexts[1].length() == 2) {
+                    fa.get(contexts[0].charAt(0)).put(contexts[1].charAt(0), contexts[1].charAt(1));
+                } else {
+                    fa.get(contexts[0].charAt(0)).put(contexts[1].charAt(0), '!');
+                }
+            } else {
+                HashMap<Character, Character> rules = new HashMap<>();
+                if (contexts[1].length() == 2) {
+                    rules.put(contexts[1].charAt(0), contexts[1].charAt(1));
+                } else {
+                    rules.put(contexts[1].charAt(0), '!');
+                }
+                fa.put(contexts[0].charAt(0), rules);
+            }
         }
 
-        else
-        {
-            state = -1;
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the word: ");
+        input = scanner.nextLine();
+
+        char nextNode = 'S';
+        StringBuilder nodes = new StringBuilder();
+        nodes.append(" ->S");
+
+        for (int i = 0; i < input.length(); i++) {
+            if (fa.get(nextNode).containsKey(input.charAt(i))) {
+                nextNode = fa.get(nextNode).get(input.charAt(i));
+                if (nextNode != '!')
+                    nodes.append("->").append(nextNode);
+            }
+
+            if (i == input.length() - 1) {
+                if (nextNode == '!') {
+                    System.out.println(input + "<- accepted");
+                    System.out.println("The traversed nodes are " + nodes);
+                } else {
+                    System.out.println(input + "<- not accepted");
+                }
+            }
         }
-    }
-
-    // D
-    static void transition1(char c)
-    {
-        if (c == 'a' || c == 'd')
-        {
-            state = E;
-        }
-        else if (c == 'b')
-        {
-            state = J;
-        }
-        else
-        {
-            state = -1;
-        }
-    }
-
-    // E
-    static void transition2(char c)
-    {
-        if (c == 'a')
-        {
-            state = E;
-        }
-        else if (c == 'e')
-        {
-            state = X;
-        }
-        else
-        {
-            state = -1;
-        }
-    }
-
-    // J
-    static void transition3(char c)
-    {
-        if (c == 'c')
-        {
-            state = S;
-        }
-        else
-        {
-            state = -1;
-        }
-    }
-
-    // X
-    static void transition4(char c)
-    {
-        state = -1;
-    }
-
-    static int isAccepted(char str[])
-    {
-        int i, len = str.length;
-
-        for (i = 0; i < len; i++)
-        {
-            if (state == S)
-                start(str[i]);
-
-            else if (state == D)
-                transition1(str[i]);
-
-            else if (state == E)
-                transition2(str[i]);
-
-            else if (state == J)
-                transition3(str[i]);
-
-            else if (state == X)
-                transition4(str[i]);
-            else
-                return 0;
-        }
-
-        if (state == E)
-        {
-            return 0;
-        }
-        else
-            return 1;
-    }
-
-
-    public static void main(String []args)
-    {
-        
-        Scanner input = new Scanner(System.in);
-        String expression = input.nextLine();
-        char str[] = expression.toCharArray();
-
-        if (isAccepted(str) == 1)
-            System.out.printf("ACCEPTED");
-        else
-            System.out.printf("NOT ACCEPTED");
     }
 }
