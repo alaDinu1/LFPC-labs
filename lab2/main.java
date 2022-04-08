@@ -6,5 +6,6 @@ public class main {
         NFA.inputAuto();
         NFA.printAuto();
         NFA.toDFA();
+        
     }
 }
